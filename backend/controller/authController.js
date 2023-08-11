@@ -1,9 +1,9 @@
 const Joi = require("joi");
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
-const UserDTO = require('../dto/user');
+const UserDTO = require("../dto/user");
 const JWTService = require("../services/JWTService");
-const RefreshToken = require('../models/token')
+const RefreshToken = require("../models/token");
 
 const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,25}$/;
 
@@ -73,27 +73,32 @@ const authController = {
       user = await userToRegister.save();
 
       // token generation
-      accessToken = JWTService.signAccessToken({_id: user. _id}, '30m');
-      refreshToken = JWTService.signRefreshToken({_id: user. _id}, '30m');
+      accessToken = JWTService.signAccessToken({ _id: user._id }, "30m");
 
+      refreshToken = JWTService.signRefreshToken({ _id: user._id }, "60m");
     } catch (error) {
       return next(error);
     }
 
     // store refresh token in db
-    await JWTService.storeRefreshToken(refreshToken, user._id)
+    await JWTService.storeRefreshToken(refreshToken, user._id);
+
     // send tokens in cookie
-    res.cookie('accessToken', accessToken, {
-        maxAge: 1000 * 60 * 60 * 24,
-        httpOnly: true
+    res.cookie("accessToken", accessToken, {
+      maxAge: 1000 * 60 * 60 * 24,
+      httpOnly: true,
     });
-    res.cookie('refreshToken', refreshToken, {
-        maxAge: 1000 * 60 * 60 * 24,
-        httpOnly: true
+
+    res.cookie("refreshToken", refreshToken, {
+      maxAge: 1000 * 60 * 60 * 24,
+      httpOnly: true,
     });
 
     // 6. response send
-    return res.status(201).json({user: userDto, auth: true});
+
+    const userDto = new UserDTO(user);
+
+    return res.status(201).json({ user: userDto, auth: true });
   },
   async login(req, res, next) {
     // 1. validate user input
@@ -176,12 +181,11 @@ const authController = {
       httpOnly: true,
     });
 
-   const userDto = new UserDTO(user);
+    const userDto = new UserDTO(user);
 
-    return res.status(200).json({user: userDto, auth: true});
+    return res.status(200).json({ user: userDto, auth: true });
   },
   async logout(req, res, next) {
-    console.log(req)
     // 1. delete refresh token from db
     const { refreshToken } = req.cookies;
 

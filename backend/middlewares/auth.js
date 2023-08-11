@@ -1,10 +1,12 @@
-const JWTService = require('../services/JWTService')
-const User = require('../models/user')
-const UserDTO = require('../dto/user')
+const JWTService = require('../services/JWTService');
+const User = require('../models/user');
+const UserDTO = require('../dto/user');
+
 const auth = async (req, res, next) => {
     try{
         // 1. refresh, access token validation
-    const { refreshToken, accessToken } = req.cookies || {};
+    const {refreshToken, accessToken} = req.cookies;
+
     if (!refreshToken || !accessToken){
         const error = {
             status: 401,

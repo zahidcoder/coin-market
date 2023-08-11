@@ -3,13 +3,19 @@ const app = express();
 const dbConnect = require('./database/index')
 const {PORT} = require('./config/index')
 const router = require('./routes/index');
-const errorHandler = require('./middleware/errorhandler');
+const errorHandler = require('./middlewares/errorHandler');
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 
+const corsOptions = {
 
+    credentials: true,
+    origin:["http://localhost:3000"]
+}
 app.use(express.json());
 app.use(router);
 app.use(cookieParser())
+app.use(cors(corsOptions))
 app.use('/storage', express.static('storage'))
 
 
