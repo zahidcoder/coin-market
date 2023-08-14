@@ -1,17 +1,21 @@
-const mongoose = require('mongoose')
-const {MONGODB_CONNECTION_STRING} = require ('../config/index')
+const mongoose = require('mongoose');
+const {MONGODB_CONNECTION_STRING} = require('../config/index');
+const dotenv = require("dotenv");
+require("dotenv").config();
 
-const connectionString = "mongodb+srv://4june:coinmarket@cluster0.zg4zjqp.mongodb.net/coin-market?retryWrites=true&w=majority"
+const connectionString = "mongodb+srv://4june:zarish@cluster0.zg4zjqp.mongodb.net/coin-market?retryWrites=true&w=majority"
 
-const dbConnect = async (req, res) => {
-console.log(`Database connected to host `)
+dotenv.config();
+
+const dbConnect = async () => {
     try {
-     await mongoose.connect(connectionString)
-       
+        mongoose.set('strictQuery', false);
+        const conn = await mongoose.connect(connectionString);
+        console.log(`Database connected to host: ${conn.connection.host}`);
+        
     } catch (error) {
-        console.log(`Error: ${error}`)
+        console.log(`Error: ${error}`);
     }
-
 }
 
-module.exports = dbConnect
+module.exports = dbConnect;

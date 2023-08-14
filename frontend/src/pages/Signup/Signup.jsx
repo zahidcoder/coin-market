@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./Signup.module.css";
 import TextInput from "../../components/TextInput/TextInput";
-import signupSchema from "../../schemas/singupSchema";
+import signupSchema from "../../schemas/signupSchema";
 import { useFormik } from "formik";
 import { setUser } from "../../store/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -141,7 +141,7 @@ function Signup() {
         </button>
       </span>
 
-      {error !== "" ? <p className={styles.errorMessage}>{error}</p> : ""}
+      {error != "" ? <p className={styles.errorMessage}>{error}</p> : ""}
     </div>
   );
 }

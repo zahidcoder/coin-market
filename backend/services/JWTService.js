@@ -1,6 +1,9 @@
 const jwt = require('jsonwebtoken');
-const {ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET} = require('../config/index');
+// const {ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET} = require('../config/index');
 const RefreshToken = require('../models/token');
+
+const ACCESS_TOKEN_SECRET = "agh232kjh43kj4h2k3jh4kj3h4kj3h4kj5h4j6hkj7h567hjhjhjhjjhhhh8888"
+const REFRESH_TOKEN_SECRET = "agh232kjh43kj4h2k3jh4kj3h4kj3h4kj5h4j6hkj7h567hSDFWERasahh8888"
 
 class JWTService{
     // sign access token
